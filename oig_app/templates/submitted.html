@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submitted</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+      margin-top: 20px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  {% if xyz_content %}
+  <h2>Generated input file:</h2>
+
+  <div class="box">
+    <pre>{{ title }}</pre>
+
+    <pre>{{ method_basis }}</pre>
+
+    <pre>{{ calculation_type }}</pre>
+
+    <pre>{{ csc }}</pre>
+    <pre>{{ xyz_content }}</pre>
+    <pre>{{ '*' }}</pre>
+  </div>
+  {% else %}
+  <p>No data available.</p>
+  {% endif %}
+  
+</body>
+</html>

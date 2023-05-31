@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OIG</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    a {
+      display: inline-block;
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 18px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    a:hover {
+      background-color: #23527c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to OIG (ORCA Input Generator)</h1>
+
+  <p>Click here to select desired parameters:</p>
+  <a href="{% url 'inputs' %}">Go to selection</a>
+</body>
+</html>

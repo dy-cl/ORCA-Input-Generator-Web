@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Input Selection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    select,
+    input[type="text"] {
+      width: 200px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .submit-button {
+      margin-top: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #23527c;
+    }
+  </style>
+  
+</head>
+<body>
+  <h1>Calculation Parameter Selection</h1>
+
+  <form method="POST" action="{% url 'inputs' %}">
+    {% csrf_token %}
+
+    <label for="calculation_type">Calculation type:</label>
+    <select id="calculation_type" name="calculation_type">
+      <option value="">Molecular Energy</option>
+      <option value="! OPT">Geometry Optimization</option>
+      <option value="! VIB">Vibrational Frequencies</option>
+      <option value="! OPT VIB">Optimize + Vib-Freq</option>
+    </select>
+
+    <label for="mol_input_format">Molecule input format:</label>
+    <select id="mol_input_format" name="mol_input_format">
+      <option value="smiles">SMILES</option>
+      <option value="inchi">InChI</option>
+    </select>
+
+    <label for="method">Method:</label>
+    <select id="method" name="method">
+      <option value="B3LYP">B3LYP</option>
+      <option value="HF">HF</option>
+      <option value="MP2">MP2</option>
+      <option value="CCSD">CCSD</option>
+    </select>
+
+    <label for="basis_set">Basis set:</label>
+    <select id="basis_set" name="basis_set">
+      <option value="STO-3G">STO-3G</option>
+      <option value="3-21G">3-21G</option>
+      <option value="6-31G(d)">6-31G(d)</option>
+      <option value="6-311+G(2d,p)">6-311+G(2d,p)</option>
+      <option value="def2-SVP">def2-SVP</option>
+      <option value="def2-TZVP">def2-TZVP</option>
+      <option value="def2-TZVPP">def2-TZVPP</option>
+      <option value="def2-QZVPP">def2-QZVPP</option>
+    </select>
+
+    <label for="coordinate_type">Coordinate type</label>
+    <select id="coordinate_type" name="coordinate_type">
+      <option value="xyz">xyz</option>
+    </select>
+
+    {% if empty_fields_error %}
+    <p style="color: red;">{{ empty_fields_error }}</p>
+    {% endif %}
+
+    {% if invalid_smiles_error %}
+    <p style="color: red;">{{ invalid_smiles_error }}</p>
+    {% endif %}
+
+    {% if invalid_inchi_error %}
+    <p style="color: red;">{{ invalid_inchi_error }}</p>
+    {% endif %}
+
+    {% if mol_string_error %}
+      <p style="color: red;">{{ mol_string_error }}</p>
+    {% endif %}
+
+    <label for="mol_string">Molecular string:</label>
+    <input type="text" id="mol_string" name="mol_string">
+
+    {% if charge_error %}
+    <p style="color: red;">{{ charge_error }}</p>
+    {% endif %}
+
+    <label for="charge">Charge:</label>
+    <input type="text" id="charge" name="charge" value="0">
+
+    {% if spin_error %}
+    <p style="color: red;">{{ spin_error }}</p>
+    {% endif %}
+
+    <label for="spin">Spin:</label>
+    <input type="text" id="spin" name="spin" value="0">
+
+    {% if mol_name_error %}
+    <p style="color: red;">{{ mol_name_error }}</p>
+    {% endif %}
+
+    <label for="mol_name">Molecule name:</label>
+    <input type="text" id="mol_name" name="mol_name">
+
+    <div class="submit-button">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</body>
+</html>
+
