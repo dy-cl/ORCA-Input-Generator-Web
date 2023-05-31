@@ -42,11 +42,34 @@
       <pre>{{ csc }}</pre>
       <pre>{{ xyz_content }}</pre>
       <pre>{{ '*' }}</pre>
+
       <pre>%eprnmr</pre>
       <pre> Nuclei = all C { shift }</pre>
       <pre> Nuclei = all H { shift }</pre>
       <pre>end</pre>
+
     </div>
+
+    {% elif calculation_type == '! UV-vis' %}
+
+    <div class="box">
+      <pre>{{ title }}</pre>
+
+      <!-- -->
+      <pre>{{ method_basis }}</pre>
+
+      <pre>%cis</pre>
+      <pre> nroots 8</pre>
+      <pre> maxdim 64</pre>
+      <pre>end</pre>
+
+      <pre>{{ csc }}</pre>
+      <pre>{{ xyz_content }}</pre>
+      <pre>{{ '*' }}</pre>
+
+    </div>
+
+
     {% else %}
     <div class="box">
       <pre>{{ title }}</pre>
