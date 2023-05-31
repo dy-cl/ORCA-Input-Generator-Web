@@ -19,6 +19,7 @@ def inputs(request):
         coordinate_type = request.POST.get('coordinate_type')
         charge = request.POST.get('charge')
         spin = request.POST.get('spin')
+        aux_basis_set = request.POST.get('aux_basis_set')
 
         #Input validation and error checking
         ############################################# 
@@ -65,6 +66,7 @@ def inputs(request):
         request.session['method_basis'] = method_basis
         request.session['calculation_type'] = calculation_type
         request.session['csc'] = csc
+        request.session['aux_basis_set'] = aux_basis_set
 
         return redirect('submitted')
 
@@ -77,6 +79,7 @@ def submitted(request):
     method_basis = request.session.get('method_basis')
     calculation_type = request.session.get('calculation_type')
     csc = request.session.get('csc')
+    aux_basis_set = request.session.get('aux_basis_set')
 
     context = {
         'xyz_content': xyz_content,
@@ -84,6 +87,7 @@ def submitted(request):
         'method_basis': method_basis,
         'calculation_type': calculation_type,
         'csc': csc,
+        'aux_basis_set': aux_basis_set
     }
 
     print(calculation_type)

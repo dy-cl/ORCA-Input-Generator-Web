@@ -53,6 +53,19 @@
       background-color: #23527c;
     }
   </style>
+
+  <script>
+    function handleCalculationTypeChange() {
+      var calculationTypeSelect = document.getElementById("calculation_type");
+      var nmrOptionsDiv = document.getElementById("nmr_options");
+
+      if (calculationTypeSelect.value === "! NMR") {
+        nmrOptionsDiv.style.display = "block";  // Show the additional drop-down boxes
+      } else {
+        nmrOptionsDiv.style.display = "none";   // Hide the additional drop-down boxes
+      }
+    }
+  </script>
   
 </head>
 <body>
@@ -62,7 +75,7 @@
     {% csrf_token %}
 
     <label for="calculation_type">Calculation type:</label>
-    <select id="calculation_type" name="calculation_type">
+    <select id="calculation_type" name="calculation_type" onchange="handleCalculationTypeChange()">
       <option value="">Molecular Energy</option>
       <option value="! OPT">Geometry Optimization</option>
       <option value="! VIB">Vibrational Frequencies</option>
@@ -101,6 +114,16 @@
     <select id="coordinate_type" name="coordinate_type">
       <option value="xyz">xyz</option>
     </select>
+
+    <div id="nmr_options" style="display: none;">
+
+      <!-- Additional drop-down boxes for NMR options go here -->
+      <label for="aux_basis_set">Auxilliary basis set:</label>
+      <select id="aux_basis_set" name="aux_basis_set">
+        <option value="AutoAux">AutoAux</option>
+        <option value="def2-SVP/C">def2-SVP/C</option>
+      </select>
+    </div>
 
     {% if empty_fields_error %}
     <p style="color: red;">{{ empty_fields_error }}</p>

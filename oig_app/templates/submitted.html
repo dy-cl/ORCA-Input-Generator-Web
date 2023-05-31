@@ -36,8 +36,7 @@
     <div class="box">
       <pre>{{ title }}</pre>
 
-      <!-- Add choices for auxilliary basis set and other options-->
-      <pre>{{ method_basis|add:' AutoAux' }}</pre> 
+      <pre>{{ method_basis }} {{ aux_basis_set }}</pre> 
       <pre>{{ calculation_type|add:' TightSCF' }}</pre>
       <pre>{{ csc }}</pre>
       <pre>{{ xyz_content }}</pre>
