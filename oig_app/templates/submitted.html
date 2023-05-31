@@ -32,17 +32,32 @@
   {% if xyz_content %}
   <h2>Generated input file:</h2>
 
-  <div class="box">
-    <pre>{{ title }}</pre>
+    {% if calculation_type == '! NMR' %}
+    <div class="box">
+      <pre>{{ title }}</pre>
 
-    <pre>{{ method_basis }}</pre>
-
-    <pre>{{ calculation_type }}</pre>
-
-    <pre>{{ csc }}</pre>
-    <pre>{{ xyz_content }}</pre>
-    <pre>{{ '*' }}</pre>
-  </div>
+      <!-- Add choices for auxilliary basis set and other options-->
+      <pre>{{ method_basis|add:' AutoAux' }}</pre> 
+      <pre>{{ calculation_type|add:' TightSCF' }}</pre>
+      <pre>{{ csc }}</pre>
+      <pre>{{ xyz_content }}</pre>
+      <pre>{{ '*' }}</pre>
+      <pre>%eprnmr</pre>
+      <pre> Nuclei = all C { shift }</pre>
+      <pre> Nuclei = all H { shift }</pre>
+      <pre>end</pre>
+    </div>
+    {% else %}
+    <div class="box">
+      <pre>{{ title }}</pre>
+      <pre>{{ method_basis }}</pre>
+      <pre>{{ calculation_type }}</pre>
+      <pre>{{ csc }}</pre>
+      <pre>{{ xyz_content }}</pre>
+      <pre>{{ '*' }}</pre>
+    </div>
+    {% endif %}
+  
   {% else %}
   <p>No data available.</p>
   {% endif %}

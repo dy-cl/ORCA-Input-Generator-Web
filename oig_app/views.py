@@ -86,4 +86,6 @@ def submitted(request):
         'csc': csc,
     }
 
+    print(calculation_type)
+
     return render(request, 'submitted.html', context)
