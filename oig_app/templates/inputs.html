@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Input Selection</title>
+  <title>Parameter Selection</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -69,14 +69,14 @@
   
 </head>
 <body>
-  <h1>Calculation Parameter Selection</h1>
+  <h1>Parameter Selection</h1>
 
   <form method="POST" action="{% url 'inputs' %}">
     {% csrf_token %}
 
-    <label for="calculation_type">Calculation type:</label>
+    <label for="calculation_type">Calculation type</label>
     <select id="calculation_type" name="calculation_type" onchange="handleCalculationTypeChange()">
-      <option value="">Molecular Energy</option>
+      <option value="! ENER">Molecular Energy</option>
       <option value="! OPT">Geometry Optimization</option>
       <option value="! VIB">Vibrational Frequencies</option>
       <option value="! OPT VIB">Optimize + Vib-Freq</option>
@@ -84,13 +84,13 @@
       <option value="! UV-vis">UV-vis + Excited States</option>
     </select>
 
-    <label for="mol_input_format">Molecule input format:</label>
+    <label for="mol_input_format">Molecule Input Format</label>
     <select id="mol_input_format" name="mol_input_format">
       <option value="smiles">SMILES</option>
       <option value="inchi">InChI</option>
     </select>
 
-    <label for="method">Method:</label>
+    <label for="method">Method</label>
     <select id="method" name="method">
       <option value="B3LYP">B3LYP</option>
       <option value="HF">HF</option>
@@ -98,7 +98,7 @@
       <option value="CCSD">CCSD</option>
     </select>
 
-    <label for="basis_set">Basis set:</label>
+    <label for="basis_set">Basis Set</label>
     <select id="basis_set" name="basis_set">
       <option value="STO-3G">STO-3G</option>
       <option value="3-21G">3-21G</option>
@@ -110,7 +110,7 @@
       <option value="def2-QZVPP">def2-QZVPP</option>
     </select>
 
-    <label for="coordinate_type">Coordinate type</label>
+    <label for="coordinate_type">Coordinate System</label>
     <select id="coordinate_type" name="coordinate_type">
       <option value="xyz">xyz</option>
     </select>
@@ -118,7 +118,7 @@
     <div id="nmr_options" style="display: none;">
 
       <!-- Additional drop-down boxes for NMR options go here -->
-      <label for="aux_basis_set">Auxilliary basis set:</label>
+      <label for="aux_basis_set">Auxilliary Basis Set</label>
       <select id="aux_basis_set" name="aux_basis_set">
         <option value="AutoAux">AutoAux</option>
         <option value="def2-SVP/C">def2-SVP/C</option>

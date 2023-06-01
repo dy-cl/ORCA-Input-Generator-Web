@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Submitted</title>
+  <title>Generated Input File</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,63 +26,93 @@
       margin: 0;
       padding: 5px;
     }
+
+    .button {
+      display: inline-block;
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 18px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .button:hover {
+      background-color: #23527c;
+    }
+
   </style>
+   <script>
+    function downloadText() {
+      var boxText = document.getElementById('box-text').innerText;
+      var blob = new Blob([boxText], { type: 'text/plain' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'text.txt';
+      link.click();
+    }
+  </script>
+
 </head>
 <body>
   {% if xyz_content %}
-  <h2>Generated input file:</h2>
-
+  <h1>Generated Input File</h1>
     {% if calculation_type == '! NMR' %}
     <div class="box">
-      <pre>{{ title }}</pre>
+      <pre id="box-text">
+{{ title }}
 
-      <pre>{{ method_basis }} {{ aux_basis_set }}</pre> 
-      <pre>{{ calculation_type|add:' TightSCF' }}</pre>
-      <pre>{{ csc }}</pre>
-      <pre>{{ xyz_content }}</pre>
-      <pre>{{ '*' }}</pre>
+{{ method_basis }} {{ aux_basis_set }}
+{{ calculation_type|add:' TightSCF' }}
 
-      <pre>%eprnmr</pre>
-      <pre> Nuclei = all C { shift }</pre>
-      <pre> Nuclei = all H { shift }</pre>
-      <pre>end</pre>
+{{ csc }}
+{{ xyz_content }}
+{{ '*' }}
 
+%eprnmr
+  Nuclei = all C { shift }
+  Nuclei = all H { shift }
+end
+      </pre>
     </div>
-
     {% elif calculation_type == '! UV-vis' %}
-
     <div class="box">
-      <pre>{{ title }}</pre>
+      <pre id="box-text">
+{{ title }}
 
-      <!-- -->
-      <pre>{{ method_basis }}</pre>
+{{ method_basis }}
 
-      <pre>%cis</pre>
-      <pre> nroots 8</pre>
-      <pre> maxdim 64</pre>
-      <pre>end</pre>
+%cis
+  nroots 8
+  maxdim 64
+end
 
-      <pre>{{ csc }}</pre>
-      <pre>{{ xyz_content }}</pre>
-      <pre>{{ '*' }}</pre>
-
+{{ csc }}
+{{ xyz_content }}
+{{ '*' }}
+      </pre>
     </div>
-
-
     {% else %}
     <div class="box">
-      <pre>{{ title }}</pre>
-      <pre>{{ method_basis }}</pre>
-      <pre>{{ calculation_type }}</pre>
-      <pre>{{ csc }}</pre>
-      <pre>{{ xyz_content }}</pre>
-      <pre>{{ '*' }}</pre>
+      <pre id="box-text">
+{{ title }}
+
+{{ method_basis }}
+{{ calculation_type }}
+
+{{ csc }}
+{{ xyz_content }}
+{{ '*' }}
+      </pre>
     </div>
     {% endif %}
-  
   {% else %}
   <p>No data available.</p>
   {% endif %}
-  
+  <button class="button" onclick="downloadText()">Download</button>
 </body>
 </html>

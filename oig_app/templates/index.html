@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OIG</title>
+  <title>ORCA Input Generator (OIG)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,14 +48,18 @@
     a:hover {
       background-color: #23527c;
     }
+
+    .small-text {
+    margin-top: 1px;
+    }
+
   </style>
 </head>
 <body>
   <div class="content">
-    <h1>Welcome to OIG (ORCA Input Generator)</h1>
-
-    <a href="{% url 'inputs' %}">Select calculation parameters</a>
+    <h1>OIG (ORCA Input Generator)</h1>
+    <p class="small-text">Powered by Django and RDKit.</p>
+    <a href="{% url 'inputs' %}">Start Selection</a>
   </div>
-
 </body>
 </html>
