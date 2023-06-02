@@ -41,7 +41,7 @@ def inputs(request):
 
             return render(request, 'inputs.html', {'mol_name_error': 'Molecule name cannot be more than 200 characters.'})
         
-        if mol_input_format == 'smiles' and not re.match(r'^[^J][0-9BCOHNSOPrIFla@+\-\[\]\(\)\\\/%=#$,.~&!]+', mol_string): 
+        if mol_input_format == 'smiles' and not re.match(r'^[^J][0-9BCOHNSOPrIFla@+\-\[\]\(\)\\\/%=#$,.~&!]+$', mol_string): 
             return render(request, 'inputs.html', {'invalid_smiles_error': 'Invalid SMILES string.'})
         
         if mol_input_format == 'inchi' and not re.match(r'^InChI\=1S?\/[A-Za-z0-9\.]+(\+[0-9]+)?(\/[cnpqbtmsih][A-Za-z0-9\-\+\(\)\,\/\?\;\.]+)*$', mol_string):
