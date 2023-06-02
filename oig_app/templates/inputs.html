@@ -52,23 +52,13 @@
     input[type="submit"]:hover {
       background-color: #23527c;
     }
-  </style>
 
-  <script>
-    function handleCalculationTypeChange() {
-      var calculationTypeSelect = document.getElementById("calculation_type");
-      var nmrOptionsDiv = document.getElementById("nmr_options");
-
-      if (calculationTypeSelect.value === "! NMR") {
-        nmrOptionsDiv.style.display = "block";  // Show the additional drop-down boxes
-      } else {
-        nmrOptionsDiv.style.display = "none";   // Hide the additional drop-down boxes
-      }
+    .basis-set-group {
+      margin-left: 20px;
     }
-  </script>
-  
+  </style>
 </head>
-<body>
+<body onload="updateBasisSetOptions()">
   <h1>Parameter Selection</h1>
 
   <form method="POST" action="{% url 'inputs' %}">
@@ -98,17 +88,20 @@
       <option value="CCSD">CCSD</option>
     </select>
 
-    <label for="basis_set">Basis Set</label>
-    <select id="basis_set" name="basis_set">
-      <option value="STO-3G">STO-3G</option>
-      <option value="3-21G">3-21G</option>
-      <option value="6-31G(d)">6-31G(d)</option>
-      <option value="6-311+G(2d,p)">6-311+G(2d,p)</option>
-      <option value="def2-SVP">def2-SVP</option>
-      <option value="def2-TZVP">def2-TZVP</option>
-      <option value="def2-TZVPP">def2-TZVPP</option>
-      <option value="def2-QZVPP">def2-QZVPP</option>
+    <label for="basis_set_group">Basis Set Group</label>
+    <select id="basis_set_group" name="basis_set_group" onchange="updateBasisSetOptions()">
+      <option value="Slater-type-Orbital">Slater-type Orbital</option>
+      <option value="Pople-Style">Pople Style</option>
+      <option value="Correlation-Consistent">Correlation Consistent</option>
+      <option value="Karlsruhe">Karlsruhe</option>
     </select>
+
+    <div id="basis_set_options">
+      <label for="basis_set">Basis Set</label>
+      <select id="basis_set" name="basis_set">
+      <!-- Options will be dynamically populated -->
+      </select>
+    </div>
 
     <label for="coordinate_type">Coordinate System</label>
     <select id="coordinate_type" name="coordinate_type">
@@ -116,9 +109,8 @@
     </select>
 
     <div id="nmr_options" style="display: none;">
-
       <!-- Additional drop-down boxes for NMR options go here -->
-      <label for="aux_basis_set">Auxilliary Basis Set</label>
+      <label for="aux_basis_set">Auxiliary Basis Set</label>
       <select id="aux_basis_set" name="aux_basis_set">
         <option value="AutoAux">AutoAux</option>
         <option value="def2-SVP/C">def2-SVP/C</option>
@@ -169,6 +161,52 @@
       <input type="submit" value="Submit">
     </div>
   </form>
-</body>
-</html>
+  <script>
+    var basisSetGroups = {
+      "Slater-type-Orbital": [
+        "STO-3G",
+        
+      ],
+      "Pople-Style": [
+        "3-21G",
+        "6-31G(d)",
+        "6-311+G(2d,p)"
+      ],
+      "Correlation-Consistent": [
+        
+        "cc-PVTZ",
+        "cc-PVQZ",
+        "aug-cc-PVDZ",
+        "aug-cc-PVTZ",
+        "aug-cc-PVQZ",
+      ],
+      "Karlsruhe": [
+        "def2-SVP",
+        "def2-TZVP",
+        "def2-TZVPP",
+        "def2-QZVPP"
+      ]
+    };
 
+    function updateBasisSetOptions() {
+      var basisSetGroupSelect = document.getElementById("basis_set_group");
+      var basisSetSelect = document.getElementById("basis_set");
+      var selectedGroup = basisSetGroupSelect.value;
+
+      // Clear current options
+      basisSetSelect.innerHTML = "";
+
+      // Populate with new options
+      if (basisSetGroups[selectedGroup]) {
+        var basisSets = basisSetGroups[selectedGroup];
+        for (var i = 0; i < basisSets.length; i++) {
+          var option = document.createElement("option");
+          option.value = basisSets[i];
+          option.text = basisSets[i];
+          basisSetSelect.appendChild(option);
+        }
+      }
+    }
+  </script>
+  </body>
+</html>
