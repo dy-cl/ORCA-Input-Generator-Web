@@ -45,23 +45,43 @@
     }
 
   </style>
-   <script>
-    function downloadText() {
-      var boxText = document.getElementById('box-text').innerText;
-      var blob = new Blob([boxText], { type: 'text/plain' });
-      var url = URL.createObjectURL(blob);
-      var link = document.createElement('a');
-      link.href = url;
-      link.download = 'input.inp';
-      link.click();
-    }
-  </script>
+
+    <script>
+      function downloadText() {
+        var boxText = document.getElementById('box-text').innerText;
+        var blob = new Blob([boxText], { type: 'text/plain' });
+        var url = URL.createObjectURL(blob);
+        
+        // Generate a unique filename with a timestamp
+        var timestamp = new Date().getTime();
+        var filename = 'input_' + timestamp + '.inp';
+        
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+      }
+    </script>
 
 </head>
 <body>
   {% if xyz_content %}
   <h1>Generated Input File</h1>
-    {% if calculation_type == '! NMR' %}
+
+  {% if calculation_type == '! ENER' %}
+  <div class="box">
+    <pre id="box-text">
+{{ title }}
+
+{{ method_basis }} 
+
+{{ csc }}
+{{ xyz_content }}
+{{ '*' }}
+    </pre>
+  </div>
+
+    {% elif calculation_type == '! NMR' %}
     <div class="box">
       <pre id="box-text">
 {{ title }}
