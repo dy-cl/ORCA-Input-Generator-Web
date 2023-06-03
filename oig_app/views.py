@@ -20,6 +20,7 @@ def inputs(request):
         charge = request.POST.get('charge')
         spin = request.POST.get('spin')
         aux_basis_set = request.POST.get('aux_basis_set')
+        excited_state_method = request.POST.get("excited_state_method")
 
         #Input validation and error checking
         ############################################# 
@@ -67,6 +68,7 @@ def inputs(request):
         request.session['calculation_type'] = calculation_type
         request.session['csc'] = csc
         request.session['aux_basis_set'] = aux_basis_set
+        request.session['excited_state_method'] = excited_state_method
 
         return redirect('submitted')
 
@@ -80,6 +82,7 @@ def submitted(request):
     calculation_type = request.session.get('calculation_type')
     csc = request.session.get('csc')
     aux_basis_set = request.session.get('aux_basis_set')
+    excited_state_method = "%" + request.session.get('excited_state_method').lower()
 
     context = {
         'xyz_content': xyz_content,
@@ -87,7 +90,8 @@ def submitted(request):
         'method_basis': method_basis,
         'calculation_type': calculation_type,
         'csc': csc,
-        'aux_basis_set': aux_basis_set
+        'aux_basis_set': aux_basis_set,
+        'excited_state_method': excited_state_method,
     }
 
     print(calculation_type)
