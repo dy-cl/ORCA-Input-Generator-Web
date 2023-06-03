@@ -53,7 +53,15 @@
       background-color: #23527c;
     }
 
+    .basis-set-container {
+      display: flex;
+    }
+
     .basis-set-group {
+      margin-left: 0px;
+    }
+
+    .basis-set {
       margin-left: 20px;
     }
   </style>
@@ -88,20 +96,24 @@
       <option value="CCSD">CCSD</option>
     </select>
 
-    <label for="basis_set_group">Basis Set Group</label>
-    <select id="basis_set_group" name="basis_set_group" onchange="updateBasisSetOptions()">
-      <option value="Slater-type-Orbital">Slater-type Orbital</option>
-      <option value="Pople-Style">Pople Style</option>
-      <option value="Correlation-Consistent">Correlation Consistent</option>
-      <option value="Karlsruhe">Karlsruhe</option>
-    </select>
-
-    <div id="basis_set_options">
-      <label for="basis_set">Basis Set</label>
-      <select id="basis_set" name="basis_set">
-      <!-- Options will be dynamically populated -->
-      </select>
-    </div>
+    <div class="basis-set-container">
+      <div class="basis-set-group">
+        <label for="basis_set_group">Basis Set Group</label>
+        <select id="basis_set_group" name="basis_set_group" onchange="updateBasisSetOptions()">
+          <option value="Slater-type-Orbital">Slater-type Orbital</option>
+          <option value="Pople-Style">Pople Style</option>
+          <option value="Correlation-Consistent">Correlation Consistent</option>
+          <option value="Karlsruhe">Karlsruhe</option>
+        </select>
+      </div>
+    
+      <div class="basis-set">
+        <label for="basis_set">Basis Set</label>
+        <select id="basis_set" name="basis_set">
+          <!-- Options will be dynamically populated -->
+        </select>
+      </div>
+    </div>    
 
     <label for="coordinate_type">Coordinate System</label>
     <select id="coordinate_type" name="coordinate_type">
