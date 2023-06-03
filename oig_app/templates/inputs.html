@@ -53,6 +53,7 @@
       background-color: #23527c;
     }
 
+    /* Basis Set Options CSS */
     .basis-set-container {
       display: flex;
     }
@@ -64,16 +65,31 @@
     .basis-set {
       margin-left: 20px;
     }
+    /* End of Basis Set Options CSS */
+
+    /* Method Options CSS */
+    .method-container {
+      display: flex;
+    }
+
+    .method-type {
+      margin-left: 0px;
+    }
+
+    .method {
+      margin-left: 20px;
+    }
+    /* End of Method Options CSS */
   </style>
 </head>
-<body onload="updateBasisSetOptions()">
+<body onload="updateBasisSetOptions(),updateMethodOptions()">
   <h1>Parameter Selection</h1>
 
   <form method="POST" action="{% url 'inputs' %}">
     {% csrf_token %}
 
     <label for="calculation_type">Calculation type</label>
-    <select id="calculation_type" name="calculation_type" onchange="handleCalculationTypeChange()">
+    <select id="calculation_type" name="calculation_type" onchange="handleNMRoptions()">
       <option value="! ENER">Molecular Energy</option>
       <option value="! OPT">Geometry Optimization</option>
       <option value="! VIB">Vibrational Frequencies</option>
@@ -87,19 +103,32 @@
       <option value="smiles">SMILES</option>
       <option value="inchi">InChI</option>
     </select>
+    
+    <!-- Method Options HTML --> 
+    <div class="method-container">
+      <div class="method-type">
+        <label for="method_type">Method Type</label>
+        <select id="method_type" name="method_type" onchange="updateMethodOptions()">
+          <option value="DFT">Density Functional Theory</option>
+          <option value="HF">Hartree-Fock</option>
+          <option value="PHF">Post Hartree-Fock</option>
+        </select>
+      </div>
 
-    <label for="method">Method</label>
-    <select id="method" name="method">
-      <option value="B3LYP">B3LYP</option>
-      <option value="HF">HF</option>
-      <option value="MP2">MP2</option>
-      <option value="CCSD">CCSD</option>
-    </select>
+      <div class="method">
+        <label for="method">Method</label>
+        <select id="method" name="method">
+          <!-- Options will be dynamically populated -->
+        </select>
+      </div>
+    </div>    
+    <!-- End of Method Options HTML--> 
 
+    <!-- Basis Set Options HTML --> 
     <div class="basis-set-container">
       <div class="basis-set-group">
         <label for="basis_set_group">Basis Set Group</label>
-        <select id="basis_set_group" name="basis_set_group" onchange="updateBasisSetOptions()">
+        <select id="basis_set_group" name="basis_set_group" onchange="updateBasisSetOptions()"> <!-- Call JS function -->
           <option value="Slater-type-Orbital">Slater-type Orbital</option>
           <option value="Pople-Style">Pople Style</option>
           <option value="Correlation-Consistent">Correlation Consistent</option>
@@ -114,6 +143,7 @@
         </select>
       </div>
     </div>    
+    <!-- End of Basis Set Options HTML-->
 
     <label for="coordinate_type">Coordinate System</label>
     <select id="coordinate_type" name="coordinate_type">
@@ -174,10 +204,11 @@
     </div>
   </form>
   <script>
+    // Basis set options
     var basisSetGroups = {
       "Slater-type-Orbital": [
         "STO-3G",
-        
+
       ],
       "Pople-Style": [
         "3-21G",
@@ -200,6 +231,21 @@
       ]
     };
 
+    // Method options
+    var methodGroups = {
+      "DFT": [
+        "B3LYP",
+      ],
+      "HF": [
+        "HF"
+      ],
+      "PHF": [
+        "MP2",
+        "CCSD",
+    ],
+    }
+    
+    // Update Basis Sets
     function updateBasisSetOptions() {
       var basisSetGroupSelect = document.getElementById("basis_set_group");
       var basisSetSelect = document.getElementById("basis_set");
@@ -217,6 +263,39 @@
           option.text = basisSets[i];
           basisSetSelect.appendChild(option);
         }
+      }
+    }
+
+    // Update Methods
+    function updateMethodOptions() {
+      var methodGroupSelect = document.getElementById("method_type");
+      var methodSelect = document.getElementById("method");
+      var selectedGroup = methodGroupSelect.value;
+
+      // Clear current options
+      methodSelect.innerHTML = "";
+
+      // Populate with new options
+      if (methodGroups[selectedGroup]) {
+        var methods = methodGroups[selectedGroup];
+        for (var i = 0; i < methods.length; i++) {
+          var option = document.createElement("option");
+          option.value = methods[i];
+          option.text = methods[i];
+          methodSelect.appendChild(option);
+        }
+      }
+    }
+    
+    // Handle additional NMR options
+    function handleNMRoptions() {
+      var calculationTypeSelect = document.getElementById("calculation_type");
+      var nmrOptionsDiv = document.getElementById("nmr_options");
+
+      if (calculationTypeSelect.value === "! NMR") {
+        nmrOptionsDiv.style.display = "block";  // Show the additional drop-down boxes
+      } else {
+        nmrOptionsDiv.style.display = "none";   // Hide the additional drop-down boxes
       }
     }
   </script>
