@@ -4,10 +4,15 @@ from .get_xyz import to_xyz
 from .get_title import make_title
 import re
 
+#HOME PAGE
+##########################################
 def index(request):
 
     return render(request, 'index.html')
+##########################################
 
+#INPUTS PAGE
+##########################################
 def inputs(request):
     if request.method == 'POST':
         calculation_type = request.POST.get('calculation_type')
@@ -46,7 +51,7 @@ def inputs(request):
             return render(request, 'inputs.html', {'invalid_smiles_error': 'Invalid SMILES string.'})
         
         if mol_input_format == 'inchi' and not re.match(r'^InChI\=1S?\/[A-Za-z0-9\.]+(\+[0-9]+)?(\/[cnpqbtmsih][A-Za-z0-9\-\+\(\)\,\/\?\;\.]+)*$', mol_string):
-            return render(request, 'inputs.html', {'invalid_inchi_error': 'Invalid SMILES string.'})
+            return render(request, 'inputs.html', {'invalid_inchi_error': 'Invalid InChi string.'})
         
         if not charge.isdigit():
             return render(request, 'inputs.html', {'charge_error': 'Charge must be a numeric value.'})
@@ -70,10 +75,25 @@ def inputs(request):
         request.session['aux_basis_set'] = aux_basis_set
         request.session['excited_state_method'] = excited_state_method
 
-        return redirect('submitted')
+        return redirect('jmol_view')
 
     return render(request, 'inputs.html')
+##########################################
 
+#REVIEW 3D STRUCTURE REQUEST PAGE
+##########################################
+def jmol_view(request):
+    xyz_content = request.session.get('xyz_content')
+
+    context = {
+        'xyz_content': xyz_content,
+    }
+
+    return render(request, 'jmol_view.html', context)
+##########################################
+
+#GENERATED INPUT FILE PAGE
+##########################################
 def submitted(request):
 
     xyz_content = request.session.get('xyz_content')
@@ -97,3 +117,4 @@ def submitted(request):
     print(calculation_type)
 
     return render(request, 'submitted.html', context)
+##########################################

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Molecule View</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/JSmol.min.js' %}"></script>
+</head>
+<body>
+TEST
+<script>
+    var Info = {
+    color: "#FFFFFF",
+    height: 300,
+    width: 300,
+    script: "load $caffeine",
+    use: "HTML5",
+    j2sPath: "static/js/j2s",
+    serverURL: "php/jsmol.php",
+    };
+    Jmol.getApplet("myJmol"), Info;
+</script>
+</body>
+</html>
