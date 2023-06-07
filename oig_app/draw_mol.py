@@ -13,14 +13,19 @@ def draw_mol(xyz_data):
     colors = []
     sizes = []
 
-    color_dict = {'C': 'black', 'O': 'red', 'N':'blue', 'H': 'grey'}
-    size_dict = {'C': 200, 'O': 300, 'N': 250, 'H': 50}
+    color_dict = {'C': 'black', 'O': 'red', 'N':'blue', 'H': 'grey', 'S': 'yellow', 'F': 'lime', 'Cl': 'green', 'I': 'purple'}
+    size_dict = {'C': 200, 'O': 300, 'N': 250, 'H': 50, 'S': 350, 'F': 100, 'Cl': 200, 'Br': 350, 'I': 400}
 
     bond_rules = {
-        'C': {'neighbours': 3, 'distance': 1.7},
-        'O': {'neighbours': 2, 'distance': 1.5},
-        'N': {'neighbours': 3, 'distance': 1.5},
-        'H': {'neighbours': 1, 'distance': 1.2},
+        'C':  {'neighbours': 3, 'distance': 2.2},
+        'O':  {'neighbours': 2, 'distance': 1.5},
+        'N':  {'neighbours': 3, 'distance': 1.5},
+        'H':  {'neighbours': 1, 'distance': 1.4},
+        'S':  {'neighbours': 2, 'distance': 2.0},
+        'F':  {'neighbours': 1, 'distance': 1.5},
+        'Cl': {'neighbours': 1, 'distance': 2.0},
+        'Br': {'neighbours': 1, 'distance': 2.1},
+        'I':  {'neighbours': 1, 'distance': 2.2},
     }
 
 
