@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Review Molecular Structure</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .mol-image {
+      margin-top: 20px;
+    }
+
+    .back-button {
+      margin-top: 20px;
+    }
+
+    .back-button a {
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .back-button a:hover {
+      background-color: #23527c;
+    }
+
+    .submit-button {
+      margin-top: 20px;
+    }
+
+    .submit-button input[type="submit"] {
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-button input[type="submit"]:hover {
+      background-color: #23527c;
+    }
+
+    .review-text {
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .review-text span {
+      font-weight: bold;
+    }
+
+    .review-buttons {
+      margin-top: 10px;
+    }
+
+    .review-buttons .button {
+      display: inline-block;
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .review-buttons .button:hover {
+      background-color: #23527c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Review Molecular Structure</h1>
+
+  <div class="mol-image">
+    <img src="data:image/png;base64,{{ mol_image }}" alt="Molecular Structure">
+  </div>
+
+  <div class="review-text">
+    <span>Does this look right?</span>
+  </div>
+
+  <div class="review-buttons">
+    <a href="{% url 'inputs' %}" class="button">No, Go Back</a>
+    <div class="submit-button">
+      <form method="POST" action="{% url 'submitted' %}">
+        {% csrf_token %}
+        <input type="submit" value="Yes, Submit">
+      </form>
+    </div>
+  </div>
+</body>
+</html>

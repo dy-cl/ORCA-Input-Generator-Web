@@ -1,13 +1,24 @@
 # views.py
 from django.shortcuts import render, redirect
+from django.utils.safestring import mark_safe
+
 from .get_xyz import to_xyz
 from .get_title import make_title
+from .draw_mol import draw_mol
+
+import base64
+from io import BytesIO
 import re
 
+#HOME PAGE
+##########################################
 def index(request):
 
     return render(request, 'index.html')
+##########################################
 
+#INPUTS PAGE
+##########################################
 def inputs(request):
     if request.method == 'POST':
         calculation_type = request.POST.get('calculation_type')
@@ -46,7 +57,7 @@ def inputs(request):
             return render(request, 'inputs.html', {'invalid_smiles_error': 'Invalid SMILES string.'})
         
         if mol_input_format == 'inchi' and not re.match(r'^InChI\=1S?\/[A-Za-z0-9\.]+(\+[0-9]+)?(\/[cnpqbtmsih][A-Za-z0-9\-\+\(\)\,\/\?\;\.]+)*$', mol_string):
-            return render(request, 'inputs.html', {'invalid_inchi_error': 'Invalid SMILES string.'})
+            return render(request, 'inputs.html', {'invalid_inchi_error': 'Invalid InChi string.'})
         
         if not charge.isdigit():
             return render(request, 'inputs.html', {'charge_error': 'Charge must be a numeric value.'})
@@ -69,11 +80,31 @@ def inputs(request):
         request.session['csc'] = csc
         request.session['aux_basis_set'] = aux_basis_set
         request.session['excited_state_method'] = excited_state_method
+        request.session['mol_string'] = mol_string
+        request.session['mol_input_format'] = mol_input_format
 
-        return redirect('submitted')
+        return redirect('mol_view')
 
     return render(request, 'inputs.html')
+##########################################
 
+#REVIEW 3D STRUCTURE REQUEST PAGE
+##########################################
+def mol_view(request):
+
+    xyz_content = request.session.get('xyz_content')
+
+    mol_image = draw_mol(xyz_content)
+
+    context = {
+        'mol_image': mol_image,
+    }
+
+    return render(request, 'mol_view.html', context)
+##########################################
+
+#GENERATED INPUT FILE PAGE
+##########################################
 def submitted(request):
 
     xyz_content = request.session.get('xyz_content')
@@ -97,3 +128,4 @@ def submitted(request):
     print(calculation_type)
 
     return render(request, 'submitted.html', context)
+##########################################
