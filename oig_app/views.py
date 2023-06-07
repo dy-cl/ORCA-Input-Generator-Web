@@ -96,6 +96,8 @@ def mol_view(request):
 
     mol_image = draw_mol(xyz_content)
 
+    mol_image = base64.b64encode(mol_image.getvalue()).decode('utf-8')
+
     context = {
         'mol_image': mol_image,
     }

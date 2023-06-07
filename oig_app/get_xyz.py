@@ -36,7 +36,10 @@ def to_xyz(mol_string, mol_input_format):
     mol = Chem.AddHs(mol)
 
     #Generate 3D coordinates
-    AllChem.EmbedMolecule(mol)
+    AllChem.EmbedMolecule(mol, useExpTorsionAnglePrefs = True, useBasicKnowledge = True, randomSeed = 10)
+
+    #Optimize molecule
+    AllChem.MMFFOptimizeMolecule(mol)
 
     #Write to XYZ format
     xyz_content = Chem.MolToXYZBlock(mol)
