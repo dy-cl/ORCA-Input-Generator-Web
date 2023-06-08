@@ -10,4 +10,4 @@ Current features:
 -Presents user with a depiction of the molecule to confirm the structure generated is correct
 -Downloadable .inp file
 
-Note that the current deployment on dycl1.pythonanywhere.com is behind the version here on github, as I only have the free PythonAnywhere plan.
+Note that the current deployment on dycl1.pythonanywhere.com may be behind the version here on github, as I only have the free PythonAnywhere plan.
